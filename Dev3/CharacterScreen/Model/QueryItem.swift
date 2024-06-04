@@ -1,8 +1,7 @@
-//
-//  QueryItem.swift
-//  Dev3
-//
-//  Created by Павел Градов on 04.06.2024.
-//
-
 import Foundation
+
+struct QueryItem {
+    let name : String
+    let status : String
+    let gender : String
+}

@@ -1,14 +1,6 @@
 import UIKit
 
-protocol ViewControllerProtocol {
-    var networkManager : NetworkProtocol! { get }
-}
-
 final class SettingsViewController: UIViewController, ViewControllerProtocol {
-
-//    private lazy var logoImageView : UIImageView = AppUIFuncs.createTitleImageView(
-//        with: CGRect(x: 20, y: 50, width: view.frame.width - 40, height: 120),
-//        image: .rnmlogo)
     
     internal var networkManager : NetworkProtocol! = NetworkManager()
     
@@ -124,7 +116,7 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
         networkManager.getRequest { chars in
             DispatchQueue.main.async {
                 for i in 0..<chars.count {
-                    let name = NetworkDataFuncs.getCorrectName(defaultName: chars[i].name ?? "default")
+                    let name = chars[i].name ?? "default"
                     self.customSegmentControl.insertSegment(withTitle: name, at: i, animated: true)
                     self.customPickerView.reloadAllComponents()
                 }
@@ -179,7 +171,6 @@ extension SettingsViewController : UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { months.count }
-    
 }
 
 extension SettingsViewController : UIPickerViewDelegate {
@@ -191,6 +182,4 @@ extension SettingsViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         months[row]
     }
-    
 }
-

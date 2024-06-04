@@ -1,8 +1,7 @@
-//
-//  NetworkProtocol.swift
-//  Dev3
-//
-//  Created by Павел Градов on 04.06.2024.
-//
-
 import Foundation
+
+protocol NetworkProtocol {
+    var url : URL! { get set }
+    var request : URLRequest? { get set }
+    func getRequest(completion: @escaping ([Character]) -> Void)
+}
