@@ -1,8 +1,10 @@
 import UIKit
 
-final class SettingsViewController: UIViewController, ViewControllerProtocol {
-    
+final class SettingsViewController: UIViewController, SettingsVCProtocol {
+
     internal var networkManager : NetworkProtocol! = NetworkManager()
+    
+    internal var presenter : SettingsVCPresenterProtocol = SettingsViewControllerPresenter()
     
     private lazy var logoImageView : UIImageView = {
         .config(view: UIImageView()) {
@@ -13,16 +15,6 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
         }
     }()
     
-    private let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    
-    private lazy var customPickerView : UIPickerView = {
-        .config(view: UIPickerView()) {
-            $0.dataSource = self
-            $0.delegate = self
-            $0.backgroundColor = .systemCyan
-        }
-    }()
-    
     private lazy var customSegmentControl : UISegmentedControl = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         // $0.setTitleTextAttributes([.font : UIFont.systemFont(ofSize: 3)], for: .normal)
@@ -30,7 +22,7 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
         $0.setTitleTextAttributes([.foregroundColor : UIColor.black], for: .selected)
         $0.backgroundColor = .black
         $0.selectedSegmentTintColor = .white
-        $0.selectedSegmentIndex = 0
+        $0.selectedSegmentIndex = 1
         $0.layer.borderColor = UIColor.white.cgColor
         $0.layer.borderWidth = 2.0
         return $0
@@ -104,8 +96,19 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
             $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = UIFont.systemFont(ofSize: 48, weight: .heavy)
             $0.layer.cornerRadius = 20
+            $0.addAction(self.btnAction, for: .touchUpInside)
         }
     }()
+    
+    private lazy var btnAction : UIAction = UIAction { [weak self] _ in
+        guard let self = self else { return }
+        setUpQueryItems()
+        if let nextVC = self.presenter.characterPresenter.viewController as? UIViewController {
+            self.present(nextVC, animated: true)
+        } else {
+            print("Something went wrong")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +121,6 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
                 for i in 0..<chars.count {
                     let name = chars[i].name ?? "default"
                     self.customSegmentControl.insertSegment(withTitle: name, at: i, animated: true)
-                    self.customPickerView.reloadAllComponents()
                 }
             }
         }
@@ -127,7 +129,6 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
     private func setUpView() {
         view.backgroundColor = .black
         view.addSubview(logoImageView)
-        // view.addSubview(customPickerView)
         view.addSubview(customSegmentControl)
         view.addSubview(settingsStack)
         view.addSubview(getInfoButton)
@@ -139,11 +140,6 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
             logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             logoImageView.heightAnchor.constraint(equalToConstant: 120),
-            
-//            customPickerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 30),
-//            customPickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            customPickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            customPickerView.heightAnchor.constraint(equalToConstant: 400),
             
             customSegmentControl.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 60),
             customSegmentControl.leadingAnchor.constraint(equalTo: logoImageView.leadingAnchor),
@@ -164,22 +160,11 @@ final class SettingsViewController: UIViewController, ViewControllerProtocol {
             
         ])
     }
-}
-
-extension SettingsViewController : UIPickerViewDataSource {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { months.count }
-}
-
-extension SettingsViewController : UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        300
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        months[row]
+    func setUpQueryItems() {
+        presenter.characterPresenter.setUpQueryItems(
+            name: customSegmentControl.titleForSegment(at: customSegmentControl.selectedSegmentIndex) ?? "deafult",
+            status: statusSwitch.isOn ? .alive : .dead,
+            gender: genderSwitch.isOn ? .male : .female)
     }
 }

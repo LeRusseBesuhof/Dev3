@@ -35,6 +35,7 @@ final class NetworkManager : NetworkProtocol {
         }.resume()
     }
     
+    // MARK: really needed?
     enum RequestError : String {
         case responseError = "Something went wrong with response!"
         case dataError = "Something went wrong with data!"

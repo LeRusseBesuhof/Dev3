@@ -1,9 +1,10 @@
 import Foundation
+import UIKit
 
-final class ViewControllerPresenter : ViewControllerPresenterProtocol {
+final class SettingsViewControllerPresenter : SettingsVCPresenterProtocol {
     
-    func setUpSettings(name: String, status: String, gender: String) {
-        
-    }
+    internal lazy var viewController : SettingsVCProtocol = SettingsViewController()
     
+    internal lazy var characterPresenter : CharacterVCPresenterProtocol = CharacterViewControllerPresetner()
+
 }

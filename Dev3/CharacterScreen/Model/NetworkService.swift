@@ -1,8 +1,12 @@
-//
-//  NetworkManager.swift
-//  Dev3
-//
-//  Created by Павел Градов on 05.06.2024.
-//
-
 import Foundation
+import Alamofire
+
+final class NetworkService : NetworkProtocol {
+    var url: URL!
+    
+    var request: URLRequest?
+    
+    func getRequest(completion: @escaping ([Character]) -> Void) {
+        //
+    }
+}
