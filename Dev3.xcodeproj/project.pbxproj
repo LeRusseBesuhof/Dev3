@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		37404BF42C0E30010080BC2B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37404BF32C0E30010080BC2B /* SettingsViewController.swift */; };
+		3749BFA82C10B9AB00A63ECC /* String.ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749BFA72C10B9AB00A63ECC /* String.ext.swift */; };
+		3749BFAE2C10BBC000A63ECC /* ShadowsIntoLight-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3749BFAC2C10BBC000A63ECC /* ShadowsIntoLight-Regular.ttf */; };
+		3749BFAF2C10BBC000A63ECC /* Creepster-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3749BFAD2C10BBC000A63ECC /* Creepster-Regular.ttf */; };
+		3749BFB12C10BC0A00A63ECC /* UIFont.ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749BFB02C10BC0A00A63ECC /* UIFont.ext.swift */; };
 		37823AA22C0F549C0005F2F3 /* QueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37823AA12C0F549C0005F2F3 /* QueryParameters.swift */; };
 		37823AA52C0F59130005F2F3 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37823AA42C0F59130005F2F3 /* NetworkProtocol.swift */; };
 		37823AA72C0F593E0005F2F3 /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37823AA62C0F593E0005F2F3 /* ViewControllerProtocol.swift */; };
@@ -31,6 +35,10 @@
 
 /* Begin PBXFileReference section */
 		37404BF32C0E30010080BC2B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3749BFA72C10B9AB00A63ECC /* String.ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.ext.swift; sourceTree = "<group>"; };
+		3749BFAC2C10BBC000A63ECC /* ShadowsIntoLight-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShadowsIntoLight-Regular.ttf"; sourceTree = "<group>"; };
+		3749BFAD2C10BBC000A63ECC /* Creepster-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Creepster-Regular.ttf"; sourceTree = "<group>"; };
+		3749BFB02C10BC0A00A63ECC /* UIFont.ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.ext.swift; sourceTree = "<group>"; };
 		37823AA12C0F549C0005F2F3 /* QueryParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParameters.swift; sourceTree = "<group>"; };
 		37823AA42C0F59130005F2F3 /* NetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		37823AA62C0F593E0005F2F3 /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
@@ -65,6 +73,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3749BFA92C10BAF300A63ECC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				37BBC7682C0DD1850093095C /* UIView.ext.swift */,
+				3749BFA72C10B9AB00A63ECC /* String.ext.swift */,
+				3749BFB02C10BC0A00A63ECC /* UIFont.ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3749BFAA2C10BB1F00A63ECC /* UIFuncs */ = {
+			isa = PBXGroup;
+			children = (
+				37BBC7652C0DD15A0093095C /* AppUIFuncs.swift */,
+			);
+			path = UIFuncs;
+			sourceTree = "<group>";
+		};
+		3749BFAB2C10BB7200A63ECC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3749BFAD2C10BBC000A63ECC /* Creepster-Regular.ttf */,
+				3749BFAC2C10BBC000A63ECC /* ShadowsIntoLight-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		37823AA32C0F59010005F2F3 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,9 +129,12 @@
 		37BBC7442C0C78970093095C /* Dev3 */ = {
 			isa = PBXGroup;
 			children = (
+				3749BFAB2C10BB7200A63ECC /* Fonts */,
 				37823AA32C0F59010005F2F3 /* Protocol */,
-				37BBC76F2C0E2BCC0093095C /* CharacterScreen */,
 				37BBC76E2C0E2B930093095C /* SettingsScreen */,
+				37BBC76F2C0E2BCC0093095C /* CharacterScreen */,
+				3749BFAA2C10BB1F00A63ECC /* UIFuncs */,
+				3749BFA92C10BAF300A63ECC /* Extensions */,
 				37BBC7452C0C78970093095C /* AppDelegate.swift */,
 				37BBC7472C0C78970093095C /* SceneDelegate.swift */,
 				37BBC74E2C0C78990093095C /* Assets.xcassets */,
@@ -118,8 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				37404BF32C0E30010080BC2B /* SettingsViewController.swift */,
-				37BBC7652C0DD15A0093095C /* AppUIFuncs.swift */,
-				37BBC7672C0DD16F0093095C /* ViewExtensions */,
+				37BBC7672C0DD16F0093095C /* Extension */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -134,13 +171,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		37BBC7672C0DD16F0093095C /* ViewExtensions */ = {
+		37BBC7672C0DD16F0093095C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				37BBC7682C0DD1850093095C /* UIView.ext.swift */,
 				37BBC76C2C0E1AC10093095C /* UIImageView.ext.swift */,
 			);
-			path = ViewExtensions;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		37BBC76E2C0E2B930093095C /* SettingsScreen */ = {
@@ -252,6 +288,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3749BFAE2C10BBC000A63ECC /* ShadowsIntoLight-Regular.ttf in Resources */,
+				3749BFAF2C10BBC000A63ECC /* Creepster-Regular.ttf in Resources */,
 				37BBC74F2C0C78990093095C /* Assets.xcassets in Resources */,
 				37BBC7522C0C78990093095C /* Base in Resources */,
 			);
@@ -279,7 +317,9 @@
 				37823AA52C0F59130005F2F3 /* NetworkProtocol.swift in Sources */,
 				37BBC75D2C0C78F40093095C /* SettingsViewControllerPresenter.swift in Sources */,
 				37BBC7662C0DD15A0093095C /* AppUIFuncs.swift in Sources */,
+				3749BFA82C10B9AB00A63ECC /* String.ext.swift in Sources */,
 				37823AA22C0F549C0005F2F3 /* QueryParameters.swift in Sources */,
+				3749BFB12C10BC0A00A63ECC /* UIFont.ext.swift in Sources */,
 				37823AA92C0F59700005F2F3 /* ViewControllerPresenterProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

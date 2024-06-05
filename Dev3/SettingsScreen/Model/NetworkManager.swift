@@ -7,7 +7,7 @@ final class NetworkManager : NetworkProtocol {
     
     private lazy var queryString : String = NetworkDataFuncs.generateRandomNumbers(count: queryParameters.numberOfCharacters)
     
-    internal lazy var url: URL! = URL(string: "https://rickandmortyapi.com/api/character/" + queryString)
+    internal lazy var url: URL! = URL(string: String.host + queryString)
     
     // https://rickandmortyapi.com/api/character/1,2,3,4,5,
     

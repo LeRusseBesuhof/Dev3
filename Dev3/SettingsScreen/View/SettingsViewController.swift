@@ -128,10 +128,7 @@ final class SettingsViewController: UIViewController, SettingsVCProtocol {
     
     private func setUpView() {
         view.backgroundColor = .black
-        view.addSubview(logoImageView)
-        view.addSubview(customSegmentControl)
-        view.addSubview(settingsStack)
-        view.addSubview(getInfoButton)
+        [logoImageView, customSegmentControl, settingsStack, getInfoButton].forEach { view.addSubview($0) }
     }
     
     private func activateConstraints() {
