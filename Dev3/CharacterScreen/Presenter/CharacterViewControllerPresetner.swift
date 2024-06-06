@@ -1,13 +1,16 @@
 import Foundation
 import UIKit
 
-final class CharacterViewControllerPresetner : CharacterVCPresenterProtocol {
+final class CharacterViewControllerPresetner {
     
-    var viewController : CharacterVCProtocol = CharacterViewController()
+    internal lazy var viewController : CharacterViewController = CharacterViewController()
     
-    func setUpQueryItems(name: String, status: Status, gender: Gender) {
-        viewController.queryItems.name = name
-        viewController.queryItems.status = status.rawValue
-        viewController.queryItems.gender = gender.rawValue
+    internal lazy var networkService : NetworkService = NetworkService()
+    
+    func setUpParameters(name: String, status: Status, gender: Gender) {
+        networkService.parameters["name"] = name
+        networkService.parameters["status"] = status.rawValue
+        networkService.parameters["gender"] = gender.rawValue
     }
+    
 }

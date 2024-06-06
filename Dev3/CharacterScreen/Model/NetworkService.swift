@@ -1,13 +1,48 @@
 import Foundation
 import Alamofire
 
-final class NetworkService : NetworkProtocol {
+final class NetworkService {
     
-    var url: URL!
+    internal var parameters : Parameters = [String: Any]()
     
-    var request: URLRequest?
+    // "https://rickandmortyapi.com/api/character/"
     
-    func getRequest(completion: @escaping ([Character]) -> Void) {
-        //
+    func getRequest(completion: @escaping ([CharacterInfo]) -> Void) {
+        
+        print(parameters)
+        AF.request(String.host, method: .get, parameters: parameters).response { result in
+            guard result.error == nil else {
+                print(result.error!.localizedDescription)
+                return
+            }
+            
+            guard let jsonData = result.data else {
+                print("something wrong with data")
+                return
+            }
+            
+            do {
+                let clearData = try JSONDecoder().decode(Person.self, from: jsonData)
+                
+                print(clearData.results.count)
+                // completion(clearData.results)
+            } catch {
+                print("something wrong with decoding")
+                return
+            }
+            
+        }
+        
     }
+}
+
+struct Person : Decodable {
+    let results : [CharacterInfo]
+}
+
+struct CharacterInfo : Decodable {
+    let name : String?
+    let status : String?
+    let gender : String?
+    let image : String?
 }

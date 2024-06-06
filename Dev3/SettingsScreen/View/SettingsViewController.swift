@@ -1,10 +1,10 @@
 import UIKit
 
-final class SettingsViewController: UIViewController, SettingsVCProtocol {
+final class SettingsViewController: UIViewController {
 
-    internal var networkManager : NetworkProtocol! = NetworkManager()
+    internal var networkManager : NetworkManager = NetworkManager()
     
-    internal var presenter : SettingsVCPresenterProtocol = SettingsViewControllerPresenter()
+    internal var presenter : SettingsViewControllerPresenter = SettingsViewControllerPresenter()
     
     private lazy var logoImageView : UIImageView = {
         .config(view: UIImageView()) {
@@ -22,7 +22,6 @@ final class SettingsViewController: UIViewController, SettingsVCProtocol {
         $0.setTitleTextAttributes([.foregroundColor : UIColor.black], for: .selected)
         $0.backgroundColor = .black
         $0.selectedSegmentTintColor = .white
-        $0.selectedSegmentIndex = 1
         $0.layer.borderColor = UIColor.white.cgColor
         $0.layer.borderWidth = 2.0
         return $0
@@ -122,6 +121,7 @@ final class SettingsViewController: UIViewController, SettingsVCProtocol {
                     let name = chars[i].name ?? "default"
                     self.customSegmentControl.insertSegment(withTitle: name, at: i, animated: true)
                 }
+                self.customSegmentControl.selectedSegmentIndex = 1
             }
         }
     }
@@ -159,7 +159,7 @@ final class SettingsViewController: UIViewController, SettingsVCProtocol {
     }
     
     func setUpQueryItems() {
-        presenter.characterPresenter.setUpQueryItems(
+        presenter.characterPresenter.setUpParameters(
             name: customSegmentControl.titleForSegment(at: customSegmentControl.selectedSegmentIndex) ?? "deafult",
             status: statusSwitch.isOn ? .alive : .dead,
             gender: genderSwitch.isOn ? .male : .female)

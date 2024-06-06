@@ -218,8 +218,8 @@
 		37BBC7722C0E2BF90093095C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				37823AAA2C0F5A660005F2F3 /* QueryItems.swift */,
 				37823AB32C1097890005F2F3 /* NetworkService.swift */,
+				37823AAA2C0F5A660005F2F3 /* QueryItems.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

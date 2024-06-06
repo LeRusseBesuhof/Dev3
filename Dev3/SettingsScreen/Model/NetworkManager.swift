@@ -1,7 +1,7 @@
 import Foundation
 // import Alamofire
 
-final class NetworkManager : NetworkProtocol {
+final class NetworkManager {
     
     private let queryParameters : QueryParameters = QueryParameters(numberOfCharacters: 3)
     
@@ -18,18 +18,20 @@ final class NetworkManager : NetworkProtocol {
         
         URLSession.shared.dataTask(with: request!) { data, response, err in
             
+            var dataResponse : [Character]!
             guard err == nil else {
                 print(RequestError.responseError.rawValue, err!.localizedDescription)
+                dataResponse = [Character(name: "rick"), Character(name: "morty"), Character(name: "summer")]
+                completion(dataResponse)
                 return
             }
             
             do {
-                let dataResponse = try JSONDecoder().decode([Character].self, from: data!)
+                dataResponse = try JSONDecoder().decode([Character].self, from: data!)
                 
                 completion(dataResponse)
             } catch {
-                print(RequestError.dataError.rawValue)
-                print(err!.localizedDescription)
+                print(RequestError.dataError.rawValue, err!.localizedDescription)
             }
             
         }.resume()
@@ -40,10 +42,7 @@ final class NetworkManager : NetworkProtocol {
         case responseError = "Something went wrong with response!"
         case dataError = "Something went wrong with data!"
     }
-    
-//    func setUpCharacterRequestQueryItems() -> [String : String] {
-//
-//    }
+
 }
 
 struct Character : Decodable {

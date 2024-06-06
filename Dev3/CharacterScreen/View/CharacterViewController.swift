@@ -1,12 +1,8 @@
 import UIKit
 
-final class CharacterViewController: UIViewController, CharacterVCProtocol {
+final class CharacterViewController: UIViewController {
     
-    var networkManager : NetworkProtocol! = NetworkService()
-    
-    private let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    
-    internal lazy var queryItems : QueryItem = QueryItem()
+    var networkService : NetworkService  = NetworkService()
     
     private lazy var logoImageView : UIImageView = {
         .config(view: UIImageView()) {
@@ -17,12 +13,20 @@ final class CharacterViewController: UIViewController, CharacterVCProtocol {
         }
     }()
     
+    // MARK: почему при добавлении этого элемента в pickerView, отображение некорректно?
+    /*
     private lazy var canvasView : UIView = {
-        .config(view: $0) {
-            $0.layer.cornerRadius = 15
-            $0.backgroundColor = .darkGray
-        }
+        $0.layer.cornerRadius = 15
+        $0.backgroundColor = .red
+        return $0
     }(UIView())
+     */
+    
+    private lazy var label : UILabel = {
+        $0.text = "Hello World"
+        $0.backgroundColor = .green
+        return $0
+    }(UILabel())
     
     private lazy var imageView : UIImageView = {
         .config(view: UIImageView()) {
@@ -43,19 +47,17 @@ final class CharacterViewController: UIViewController, CharacterVCProtocol {
     }
     
     private lazy var customPickerView : UIPickerView = {
-        .config(view: UIPickerView()) {
-            $0.dataSource = self
-            $0.delegate = self
-            $0.backgroundColor = .systemCyan
-        }
-    }()
+        $0.dataSource = self
+        $0.delegate = self
+        $0.backgroundColor = .systemCyan
+        return $0
+    }(UIPickerView(frame: view.frame))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpView()
         activateConstraints()
-        
         /*
         let imageUrl = URL(string: item.image ?? "")
         imageView.load(url: imageUrl!)
@@ -71,26 +73,29 @@ final class CharacterViewController: UIViewController, CharacterVCProtocol {
     private func setUpView() {
         view.backgroundColor = .black
         // [imageView, nameLabel, statusLabel, genderLabel].forEach { canvasView.addSubview($0) }
-        [logoImageView, customPickerView].forEach { view.addSubview($0) }
+        [customPickerView].forEach { view.addSubview($0) }
+        networkService.getRequest { chars in
+            //
+        }
         
     }
     
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-            logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            logoImageView.heightAnchor.constraint(equalToConstant: 120),
+//            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+//            logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            logoImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            customPickerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 30),
-            customPickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            customPickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            customPickerView.heightAnchor.constraint(equalToConstant: 400),
+//            customPickerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 30),
+//            customPickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            customPickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            customPickerView.heightAnchor.constraint(equalToConstant: 400),
             
-            canvasView.leadingAnchor.constraint(equalTo: customPickerView.leadingAnchor),
-            canvasView.trailingAnchor.constraint(equalTo: customPickerView.trailingAnchor),
-            canvasView.widthAnchor.constraint(equalTo: customPickerView.widthAnchor),
-            canvasView.heightAnchor.constraint(equalTo: customPickerView.heightAnchor),
+//            canvasView.leadingAnchor.constraint(equalTo: customPickerView.leadingAnchor),
+//            canvasView.trailingAnchor.constraint(equalTo: customPickerView.trailingAnchor),
+//            canvasView.widthAnchor.constraint(equalTo: customPickerView.widthAnchor),
+//            canvasView.heightAnchor.constraint(equalTo: customPickerView.heightAnchor),
     
 //            imageView.topAnchor.constraint(equalTo: canvasView.topAnchor, constant: 26),
 //            imageView.centerXAnchor.constraint(equalTo: canvasView.centerXAnchor),
@@ -118,20 +123,27 @@ extension CharacterViewController : UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { months.count }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        5
+    }
 }
 
 extension CharacterViewController : UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        500
+        100
     }
-    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        months[row]
-//    }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        canvasView
+        
+        let canvasView : UIView = {
+            $0.layer.cornerRadius = 15
+            $0.backgroundColor = .red
+            return $0
+        }(UIView())
+        
+        return canvasView
     }
+    
+
 }

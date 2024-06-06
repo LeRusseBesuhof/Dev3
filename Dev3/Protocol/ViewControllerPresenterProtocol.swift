@@ -8,4 +8,5 @@ protocol SettingsVCPresenterProtocol {
 protocol CharacterVCPresenterProtocol {
     var viewController : CharacterVCProtocol { get }
     func setUpQueryItems(name: String, status: Status, gender: Gender)
+    func getQueryItems() -> QueryItem
 }

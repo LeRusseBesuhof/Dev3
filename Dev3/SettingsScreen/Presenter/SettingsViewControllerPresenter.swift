@@ -1,10 +1,9 @@
 import Foundation
 import UIKit
 
-final class SettingsViewControllerPresenter : SettingsVCPresenterProtocol {
+final class SettingsViewControllerPresenter {
     
-    internal lazy var viewController : SettingsVCProtocol = SettingsViewController()
+    internal lazy var viewController : SettingsViewController = SettingsViewController()
     
-    internal lazy var characterPresenter : CharacterVCPresenterProtocol = CharacterViewControllerPresetner()
-
+    internal lazy var characterPresenter : CharacterViewControllerPresetner = CharacterViewControllerPresetner()
 }

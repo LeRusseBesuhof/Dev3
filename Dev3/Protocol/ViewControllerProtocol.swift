@@ -10,6 +10,6 @@ protocol SettingsVCProtocol : ViewControllerProtocol {
     func setUpQueryItems()
 }
 
-protocol CharacterVCProtocol : ViewControllerProtocol {
+protocol CharacterVCProtocol {
     var queryItems : QueryItem { get set }
 }
