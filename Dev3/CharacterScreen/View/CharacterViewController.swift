@@ -22,23 +22,20 @@ final class CharacterViewController: UIViewController {
     }(UIView())
      */
     
-//    private lazy var testView : UIView = {
-//        $0.backgroundColor = .red
-//        return $0
-//    }(UIView(frame: CGRect(x: view.center.x, y: 100, width: 50, height: 50)))
-    
     private lazy var customPickerView : UIPickerView = {
-        $0.dataSource = self
-        $0.delegate = self
-        $0.backgroundColor = .systemCyan
-        return $0
-    }(UIPickerView(frame: view.frame))
+        .config(view: UIPickerView()) {
+            $0.backgroundColor = .cyan
+            $0.dataSource = self
+            $0.delegate = self
+        }
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpView()
+        activateConstraints()
         /*
         let imageUrl = URL(string: item.image ?? "")
         imageView.load(url: imageUrl!)
@@ -54,11 +51,27 @@ final class CharacterViewController: UIViewController {
     private func setUpView() {
         view.backgroundColor = .black
         // [imageView, nameLabel, statusLabel, genderLabel].forEach { canvasView.addSubview($0) }
-        [customPickerView].forEach { view.addSubview($0) }
+        [logoImageView, customPickerView].forEach { view.addSubview($0) }
         networkService.getRequest { chars in
-            //
+            for char in chars {
+                //
+            }
         }
         
+    }
+    
+    private func activateConstraints() {
+        NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            logoImageView.heightAnchor.constraint(equalToConstant: 120),
+            
+            customPickerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 30),
+            customPickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            customPickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            customPickerView.heightAnchor.constraint(equalToConstant: 350),
+        ])
     }
 }
 
@@ -66,22 +79,18 @@ extension CharacterViewController : UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        5
-    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { 5 }
 }
 
 extension CharacterViewController : UIPickerViewDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        400
-    }
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat { 100 }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let canvasView : UIView = {
             $0.layer.cornerRadius = 15
-            $0.backgroundColor = .red
+            $0.backgroundColor = .darkGray
             return $0
         }(UIView())
         
@@ -89,34 +98,31 @@ extension CharacterViewController : UIPickerViewDelegate {
             $0.clipsToBounds = true
             $0.contentMode = .scaleAspectFill
             $0.backgroundColor = .white
-            // $0.layer.cornerRadius = 150
-            $0.frame = CGRect(x: canvasView.frame.midX, y: 26, width: 50, height: 50)
-            // $0.center.x = canvasView.center.x
+            $0.layer.cornerRadius = 40
+            $0.frame = CGRect(x: 10, y: 10, width: 80, height: 80)
             return $0
         }(UIImageView())
         
         let nameLabel : UILabel = AppUIFuncs.createLabel(
-            size: CGRect(x: imageView.frame.minX, y: imageView.frame.maxY + 15, width: imageView.frame.width, height: 40),
+            with: "Hello world",
+            size: CGRect(x: 100, y: 10, width: 220, height: 40),
             alignment: .center,
             font: UIFont.getCreepsterFont(fontSize: 40))
         
         let statusLabel : UILabel = AppUIFuncs.createLabel(
-            with: "\u{2022} Status: ",
-            size: CGRect(x: imageView.frame.minX, y: nameLabel.frame.maxY + 10, width: imageView.frame.width, height: 35),
+            with: "\u{2022} ",
+            size: CGRect(x: nameLabel.frame.minX, y: nameLabel.frame.maxY, width: 110, height: 40),
             alignment: .left,
-            font: UIFont.getShadowFont(fontSize: 32))
+            font: UIFont.getShadowFont(fontSize: 24))
         
         let genderLabel : UILabel = AppUIFuncs.createLabel(
-            with: "\u{2022} Gender: ",
-            size: CGRect(x: imageView.frame.minX, y: statusLabel.frame.maxY, width: imageView.frame.width, height: 35),
+            with: "\u{2022} ",
+            size: CGRect(x: statusLabel.frame.maxX + 10, y: nameLabel.frame.maxY, width: 100, height: 40),
             alignment: .left,
-            font: UIFont.getShadowFont(fontSize: 32))
+            font: UIFont.getShadowFont(fontSize: 24))
         
-        // [imageView].forEach { canvasView.addSubview($0) }
-        canvasView.addSubview(imageView)
+        [imageView, nameLabel, statusLabel, genderLabel].forEach { canvasView.addSubview($0) }
         
         return canvasView
     }
-    
-
 }
