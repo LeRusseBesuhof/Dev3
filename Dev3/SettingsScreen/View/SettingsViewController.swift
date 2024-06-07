@@ -128,6 +128,7 @@ final class SettingsViewController: UIViewController {
     
     private func setUpView() {
         view.backgroundColor = .black
+        [deadLabel, aliveLabel, maleLabel, femaleLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         [logoImageView, customSegmentControl, settingsStack, getInfoButton].forEach { view.addSubview($0) }
     }
     

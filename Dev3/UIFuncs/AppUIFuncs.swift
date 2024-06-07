@@ -3,16 +3,19 @@ import UIKit
 
 final class AppUIFuncs {
     
-    static func createLabel(with title: String? = nil, alignment: NSTextAlignment, font: UIFont) -> UILabel {
-        .config(view: UILabel()) {
+    static func createLabel(with title: String? = nil, size: CGRect? = nil, alignment: NSTextAlignment, font: UIFont) -> UILabel {
+        {
             $0.textAlignment = alignment
             $0.textColor = .white
-            // $0.backgroundColor = .darkGray
+            $0.backgroundColor = .brown
             $0.font = font
             $0.numberOfLines = .zero
-            guard let title = title else { return }
+            guard let title = title else { return $0 }
             $0.text = title
-        }
+            guard let size = size else { return $0 }
+            $0.frame = size
+            return $0
+        }(UILabel())
     }
     
     static func createTitleImageView(with size: CGRect, image: UIImage) -> UIImageView {

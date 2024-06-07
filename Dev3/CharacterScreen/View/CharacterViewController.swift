@@ -22,29 +22,10 @@ final class CharacterViewController: UIViewController {
     }(UIView())
      */
     
-    private lazy var label : UILabel = {
-        $0.text = "Hello World"
-        $0.backgroundColor = .green
-        return $0
-    }(UILabel())
-    
-    private lazy var imageView : UIImageView = {
-        .config(view: UIImageView()) {
-            $0.clipsToBounds = true
-            $0.contentMode = .scaleAspectFill
-            $0.layer.cornerRadius = 150
-        }
-    }()
-    
-    private lazy var nameLabel : UILabel = AppUIFuncs.createLabel(alignment: .center, font: UIFont.getCreepsterFont(fontSize: 40))
-    
-    private lazy var statusLabel : UILabel = AppUIFuncs.createLabel(with: "\u{2022} Status: ", alignment: .left, font: UIFont.getShadowFont(fontSize: 32))
-    
-    private lazy var genderLabel : UILabel = AppUIFuncs.createLabel(with: "\u{2022} Gender: ", alignment: .left, font: UIFont.getShadowFont(fontSize: 32))
-    
-    func prepareForReuse() {
-        imageView.image = nil
-    }
+//    private lazy var testView : UIView = {
+//        $0.backgroundColor = .red
+//        return $0
+//    }(UIView(frame: CGRect(x: view.center.x, y: 100, width: 50, height: 50)))
     
     private lazy var customPickerView : UIPickerView = {
         $0.dataSource = self
@@ -53,11 +34,11 @@ final class CharacterViewController: UIViewController {
         return $0
     }(UIPickerView(frame: view.frame))
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpView()
-        activateConstraints()
         /*
         let imageUrl = URL(string: item.image ?? "")
         imageView.load(url: imageUrl!)
@@ -79,44 +60,6 @@ final class CharacterViewController: UIViewController {
         }
         
     }
-    
-    private func activateConstraints() {
-        NSLayoutConstraint.activate([
-//            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-//            logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            logoImageView.heightAnchor.constraint(equalToConstant: 120),
-            
-//            customPickerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 30),
-//            customPickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            customPickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            customPickerView.heightAnchor.constraint(equalToConstant: 400),
-            
-//            canvasView.leadingAnchor.constraint(equalTo: customPickerView.leadingAnchor),
-//            canvasView.trailingAnchor.constraint(equalTo: customPickerView.trailingAnchor),
-//            canvasView.widthAnchor.constraint(equalTo: customPickerView.widthAnchor),
-//            canvasView.heightAnchor.constraint(equalTo: customPickerView.heightAnchor),
-    
-//            imageView.topAnchor.constraint(equalTo: canvasView.topAnchor, constant: 26),
-//            imageView.centerXAnchor.constraint(equalTo: canvasView.centerXAnchor),
-//            imageView.widthAnchor.constraint(equalToConstant: 300),
-//            imageView.heightAnchor.constraint(equalToConstant: 300),
-//            
-//            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
-//            nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
-//            nameLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
-//            
-//            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-//            statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-//            statusLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-//            
-//            genderLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor),
-//            genderLabel.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-//            genderLabel.trailingAnchor.constraint(equalTo: statusLabel.trailingAnchor),
-            
-            // genderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
-        ])
-    }
 }
 
 extension CharacterViewController : UIPickerViewDataSource {
@@ -131,7 +74,7 @@ extension CharacterViewController : UIPickerViewDataSource {
 extension CharacterViewController : UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        100
+        400
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -141,6 +84,36 @@ extension CharacterViewController : UIPickerViewDelegate {
             $0.backgroundColor = .red
             return $0
         }(UIView())
+        
+        let imageView : UIImageView = {
+            $0.clipsToBounds = true
+            $0.contentMode = .scaleAspectFill
+            $0.backgroundColor = .white
+            // $0.layer.cornerRadius = 150
+            $0.frame = CGRect(x: canvasView.frame.midX, y: 26, width: 50, height: 50)
+            // $0.center.x = canvasView.center.x
+            return $0
+        }(UIImageView())
+        
+        let nameLabel : UILabel = AppUIFuncs.createLabel(
+            size: CGRect(x: imageView.frame.minX, y: imageView.frame.maxY + 15, width: imageView.frame.width, height: 40),
+            alignment: .center,
+            font: UIFont.getCreepsterFont(fontSize: 40))
+        
+        let statusLabel : UILabel = AppUIFuncs.createLabel(
+            with: "\u{2022} Status: ",
+            size: CGRect(x: imageView.frame.minX, y: nameLabel.frame.maxY + 10, width: imageView.frame.width, height: 35),
+            alignment: .left,
+            font: UIFont.getShadowFont(fontSize: 32))
+        
+        let genderLabel : UILabel = AppUIFuncs.createLabel(
+            with: "\u{2022} Gender: ",
+            size: CGRect(x: imageView.frame.minX, y: statusLabel.frame.maxY, width: imageView.frame.width, height: 35),
+            alignment: .left,
+            font: UIFont.getShadowFont(fontSize: 32))
+        
+        // [imageView].forEach { canvasView.addSubview($0) }
+        canvasView.addSubview(imageView)
         
         return canvasView
     }
