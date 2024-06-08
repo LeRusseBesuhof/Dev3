@@ -30,12 +30,16 @@ final class CharacterViewController: UIViewController {
         }
     }()
     
+    private var dataForPicker : [[String]] = [[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpView()
         activateConstraints()
+        
+        // [imageURL, nameText, statusText, gendetText]
+        
         /*
         let imageUrl = URL(string: item.image ?? "")
         imageView.load(url: imageUrl!)
@@ -53,11 +57,17 @@ final class CharacterViewController: UIViewController {
         // [imageView, nameLabel, statusLabel, genderLabel].forEach { canvasView.addSubview($0) }
         [logoImageView, customPickerView].forEach { view.addSubview($0) }
         networkService.getRequest { chars in
-            for char in chars {
-                //
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                for char in chars {
+                    dataForPicker.append([char.image ?? "image", char.name ?? "name", char.status ?? "status", char.gender ?? "gender"])
+                    // print(dataForPicker)
+                    
+                }
+                // print("dataForPicker init end -> \(dataForPicker)")
+                // dataForPicker[row][1]
             }
         }
-        
     }
     
     private func activateConstraints() {
@@ -73,6 +83,8 @@ final class CharacterViewController: UIViewController {
             customPickerView.heightAnchor.constraint(equalToConstant: 350),
         ])
     }
+    
+    private func getFilledDataForPicker() -> [[String]] { dataForPicker }
 }
 
 extension CharacterViewController : UIPickerViewDataSource {
@@ -87,6 +99,8 @@ extension CharacterViewController : UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat { 100 }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        print(dataForPicker)
         
         let canvasView : UIView = {
             $0.layer.cornerRadius = 15
@@ -104,7 +118,7 @@ extension CharacterViewController : UIPickerViewDelegate {
         }(UIImageView())
         
         let nameLabel : UILabel = AppUIFuncs.createLabel(
-            with: "Hello world",
+            with: "My Name",
             size: CGRect(x: 100, y: 10, width: 220, height: 40),
             alignment: .center,
             font: UIFont.getCreepsterFont(fontSize: 40))

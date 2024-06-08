@@ -116,12 +116,13 @@ final class SettingsViewController: UIViewController {
         activateConstraints()
         
         networkManager.getRequest { chars in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 for i in 0..<chars.count {
                     let name = chars[i].name ?? "default"
-                    self.customSegmentControl.insertSegment(withTitle: name, at: i, animated: true)
+                    customSegmentControl.insertSegment(withTitle: name, at: i, animated: true)
                 }
-                self.customSegmentControl.selectedSegmentIndex = 1
+                customSegmentControl.selectedSegmentIndex = 1
             }
         }
     }

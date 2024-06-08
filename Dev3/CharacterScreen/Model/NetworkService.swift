@@ -9,7 +9,6 @@ final class NetworkService {
     
     func getRequest(completion: @escaping ([CharacterInfo]) -> Void) {
         
-        print(parameters)
         AF.request(String.host, method: .get, parameters: parameters).response { result in
             guard result.error == nil else {
                 print(result.error!.localizedDescription)
@@ -24,8 +23,7 @@ final class NetworkService {
             do {
                 let clearData = try JSONDecoder().decode(Person.self, from: jsonData)
                 
-                print(clearData.results.count)
-                // completion(clearData.results)
+                completion(clearData.results)
             } catch {
                 print("something wrong with decoding")
                 return
